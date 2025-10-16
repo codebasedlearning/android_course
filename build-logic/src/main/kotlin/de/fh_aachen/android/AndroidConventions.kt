@@ -1,3 +1,5 @@
+// (C) 2025 A.Voß, a.voss@fh-aachen.de, info@codebasedlearning.dev
+
 package de.fh_aachen.android
 
 import com.android.build.api.dsl.ApplicationExtension

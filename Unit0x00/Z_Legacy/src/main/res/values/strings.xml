@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Old App</string>
+    <string name="logcat_text">Ein Eintrag im LogCat</string>
+</resources>

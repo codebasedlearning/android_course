@@ -3,19 +3,19 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("android-conventions")
-    // alias(libs.plugins.android.conventions)
 }
 
 android {
-    namespace = "de.fh_aachen.android.first_composables"
+    namespace = "de.fh_aachen.android.navigation"
     // compileSdk = 35
 
     defaultConfig {
-        applicationId = "de.fh_aachen.android.first_composables"
-        // minSdk = 27     // Oreo 8.1
-        // targetSdk = 35  // Android 15
+        applicationId = "de.fh_aachen.android.navigation"
+        // minSdk = 27
+        // targetSdk = 35
         versionCode = 1
         versionName = "1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -23,7 +23,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -31,7 +32,6 @@ android {
     kotlin {
         jvmToolchain(21)
     }
-
 
     buildFeatures {
         compose = true
@@ -47,6 +47,14 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    //implementation(libs.material)
+    implementation(libs.androidx.material3)
+    implementation("androidx.compose.material:material-icons-extended:1.6.7")
+    //implementation("androidx.compose.material:material-icons-extended:1.13.0")
+    //implementation("androidx.compose.material:material:1.9.3")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.activity.compose)
+    //implementation("androidx.compose.material3:material3-icons-extended:1.13.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
