@@ -3,19 +3,19 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     id("android-conventions")
-    // alias(libs.plugins.android.conventions)
 }
 
 android {
-    namespace = "de.fh_aachen.android.first_composables"
-    // compileSdk = 35
+    namespace = "de.fh_aachen.android.models"
+    //compileSdk = 35
 
     defaultConfig {
-        applicationId = "de.fh_aachen.android.first_composables"
-        // minSdk = 27     // Oreo 8.1
-        // targetSdk = 35  // Android 15
+        applicationId = "de.fh_aachen.android.models"
+        //minSdk = 27     // Oreo 8.1
+        //targetSdk = 35  // Android 15
         versionCode = 1
         versionName = "1.0"
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -23,7 +23,8 @@ android {
         release {
             isMinifyEnabled = false
             proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro"
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
             )
         }
     }
@@ -31,7 +32,6 @@ android {
     kotlin {
         jvmToolchain(21)
     }
-
     buildFeatures {
         compose = true
     }
@@ -46,6 +46,10 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    //implementation(libs.androidx.material.icons.extended)
+    implementation("androidx.compose.material:material-icons-extended:1.6.7")
+
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
