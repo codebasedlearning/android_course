@@ -46,7 +46,7 @@ fun includeUnits(vararg unitRoots: String) {
 }
 
 // all units with modules
-includeUnits("Unit0x00", "Unit0x01", "Unit0x02")
+includeUnits("Unit0x00", "Unit0x01", "Unit0x02", "Unit0x03")
 
 /*
 

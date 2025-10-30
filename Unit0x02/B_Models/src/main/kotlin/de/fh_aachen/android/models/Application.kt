@@ -29,6 +29,7 @@ class ModelsApplication : Application() {
         }
     }
 
+    // SupervisorJob grants that in case of an error other child coroutines are not cancelled.
     private val appScope: CoroutineScope by lazy { CoroutineScope(SupervisorJob() + Dispatchers.Default) }
 
     private val roomTemperatureRepository by lazy { RoomTemperatureRepository() }
