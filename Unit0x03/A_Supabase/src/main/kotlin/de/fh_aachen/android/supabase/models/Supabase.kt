@@ -128,6 +128,13 @@ class SupabaseRepository(private val scope: CoroutineScope) {
         }
     }
 
+    /*
+     * You need permissions on Supabase, e.g.
+     * GRANT USAGE ON SCHEMA ami_zone TO authenticated;
+     * GRANT SELECT ON ami_zone.shop_product TO authenticated;
+     * GRANT SELECT ON ami_zone.shop_category TO authenticated;
+     * or via RLS
+     */
     fun printProducts() {
         Log.e(TAG, "supabase print products")
         scope.launch {
