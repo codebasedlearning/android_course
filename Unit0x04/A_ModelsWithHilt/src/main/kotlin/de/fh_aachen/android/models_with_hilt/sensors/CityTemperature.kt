@@ -17,7 +17,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
 
-const val TAG = "CITY"
+private const val TAG = "CITY"
 
 private val cityTemperatureRange: ClosedRange<Int> = -5..15
 
@@ -27,6 +27,9 @@ private val cityTemperatureRange: ClosedRange<Int> = -5..15
     ): SensorFlow { ...
 
     use @Singleton and @Inject
+
+    @Inject tells Dagger/Hilt that this class is constructable automatically
+    by the DI framework.
  */
 
 @Singleton

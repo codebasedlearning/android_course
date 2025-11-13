@@ -3,8 +3,11 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
 
+    // HILT, KAPT or KSP
     alias(libs.plugins.hilt.android)
-    alias(libs.plugins.kotlin.kapt)
+    // alias(libs.plugins.kotlin.kapt)
+    // alias(libs.plugins.kotlin.ksp)
+    id("com.google.devtools.ksp")
 
     id("android-conventions")
 }
@@ -39,9 +42,9 @@ android {
     buildFeatures {
         compose = true
     }
-    kapt {
-        correctErrorTypes = true
-    }
+    // kapt {
+    //     correctErrorTypes = true
+    // }
 }
 
 dependencies {
@@ -65,7 +68,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.hilt.android)
-    kapt(libs.hilt.android.compiler)
+    // kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
     // implementation(libs.androidx.hilt.navigation.compose)
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
 }

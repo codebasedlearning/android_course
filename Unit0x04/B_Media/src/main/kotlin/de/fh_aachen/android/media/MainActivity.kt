@@ -68,6 +68,7 @@ fun LoginScreen() {
     }
 }
 
+// extension property :-)
 val ExoPlayer.isAtEnd
     get() = currentPosition==0L || (currentPosition >= duration && duration > 0)
 
@@ -89,9 +90,22 @@ fun VideoScreen() {
     val isPlaying = remember { mutableStateOf(false) }
     val isAtEnd = remember { mutableStateOf(false) }
 
-    // DisposableEffect may be used to initialize or subscribe to a key and reinitialize
-    // when a different key is provided, performing cleanup for the old operation before
-    // initializing the new.
+    /*
+     * Because Compose UI functions are NOT lifecycle owners. They can recompose at any time.
+     * If you register a listener inside a composable without DisposableEffect, it will:
+     *    - register the listener multiple times
+     *    - never remove previous listeners
+     *    - leak your ExoPlayer or cause duplicated events
+     *
+     * DisposableEffect may be used to initialize or subscribe to a key and reinitialize
+     * when a different key is provided, performing cleanup for the old operation before
+     * initializing the new.
+     * It runs a block once when the key enters the composition, and executes its
+     * onDispose { ... } block when the key leaves the composition.
+     *
+     * If the key (object identity) changes, that side-effect is considered out-of-date
+     * => dispose it + recreate it.
+     */
     DisposableEffect(exoPlayer) {
         val listener = object : Player.Listener {
             override fun onIsPlayingChanged(isPlayingState: Boolean) {

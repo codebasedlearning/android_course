@@ -3,6 +3,7 @@
 package de.fh_aachen.android.models_with_hilt
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
@@ -18,6 +19,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.ArrowCircleDown
 import androidx.compose.material.icons.filled.ArrowCircleUp
 import androidx.compose.material3.Icon
@@ -38,9 +40,13 @@ import dagger.hilt.android.AndroidEntryPoint
 import de.fh_aachen.android.models_with_hilt.ui.composables.BackgroundImage
 import de.fh_aachen.android.models_with_hilt.ui.composables.LabeledBox
 import de.fh_aachen.android.models_with_hilt.sensors.CityTemperatureViewModel
+import de.fh_aachen.android.models_with_hilt.sensors.InjectLegacy
+import de.fh_aachen.android.models_with_hilt.sensors.InjectMe
+import de.fh_aachen.android.models_with_hilt.sensors.InjectOnce
 import de.fh_aachen.android.models_with_hilt.ui.theme.BoxTextColor
 import de.fh_aachen.android.models_with_hilt.ui.theme.CityColor
 import de.fh_aachen.android.models_with_hilt.ui.theme.MyAppTheme
+import javax.inject.Inject
 
 /*
  * @AndroidEntryPoint - Adds a DI container to Android class annotated with it.
@@ -48,13 +54,18 @@ import de.fh_aachen.android.models_with_hilt.ui.theme.MyAppTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject lateinit var me: InjectMe           // injected before onCreate
+    @Inject lateinit var once: InjectOnce       // (does not work as local var.)
+    @Inject lateinit var legacy: InjectLegacy   // mental model: push dependencies in at object construction
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         setContent {
             MyAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SensorScreen(modifier = Modifier.padding(innerPadding))
+                    SensorScreen(modifier = Modifier.padding(innerPadding),
+                        me, once, legacy)
                 }
             }
         }
@@ -62,7 +73,7 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun SensorScreen(modifier: Modifier) {
+fun SensorScreen(modifier: Modifier, me:InjectMe, once:InjectOnce, legacy: InjectLegacy) {
     Box(modifier = Modifier.fillMaxSize()) {
         BackgroundImage(id = R.drawable.weather_house)
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopEnd) {
@@ -70,6 +81,12 @@ fun SensorScreen(modifier: Modifier) {
                 LabeledBox(fraction = 0.55f, label = "   City", borderColor = CityColor, textColor = BoxTextColor) {
                     Column {
                         CityBox()
+                        IconButton(onClick = {
+                            me.print()
+                            once.print()
+                        }, modifier = Modifier) {
+                            Icon(imageVector = Icons.Filled.AddCircle, contentDescription = "-1")
+                        }
                     }
                 }
             }

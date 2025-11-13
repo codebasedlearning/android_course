@@ -34,6 +34,15 @@ import javax.inject.Singleton
  * Instead of 'new CityTemperatureRepository()', you just say 'I need one' and Hilt supplies
  * it — correctly scoped.
  *
+ * Summary
+ *    - Hilt uses Dagger under the hood
+ *    - All factories, providers, and the dependency graph are generated at compile time.
+ *    - Hilt creates the components for you (Application, Activity, Fragment, ViewModel…)
+ *    - When something needs a dependency, Hilt uses the generated factories to provide
+ *      the correct instance, respecting scopes (@Singleton, @ViewModelScoped, etc.)
+ *    - No reflection. No runtime graph building.
+ *
+ *
  * Key annotations:
  *
  *    - @HiltAndroidApp on your Application subclass
